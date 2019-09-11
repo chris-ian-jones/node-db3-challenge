@@ -6,6 +6,7 @@ module.exports = {
   findSteps,
   add,
   update,
+  remove,
 }
 
 function find() {
@@ -33,8 +34,16 @@ function add(scheme) {
     .insert(scheme)
 }
 
+// can update but unable to resolve to the newly inserted scheme, including id
 function update(changes, id) {
   return db('schemes as sch')
     .where('sch.id', id)
     .update(changes)
+}
+
+// can delete but unable to resolve to the newly inserted scheme, including id
+function remove(id) {
+  return db('schemes as sch')
+    .where('sch.id', id)
+    .del()
 }
