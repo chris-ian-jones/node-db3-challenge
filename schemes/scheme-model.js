@@ -4,6 +4,7 @@ module.exports = {
   find,
   findById,
   findSteps,
+  add,
 }
 
 function find() {
@@ -22,4 +23,11 @@ function findSteps(id) {
     .where('sch.id', id)
     .select('sch.scheme_name', 'st.step_number', 'st.instructions')
     .orderBy('st.step_number')
+}
+
+// can add but unable to resolve to the newly inserted scheme, including id
+function add(scheme) {
+  return db('schemes as sch')
+    .returning(['sch.id','sch.scheme_name'])
+    .insert(scheme)
 }
