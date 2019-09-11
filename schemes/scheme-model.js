@@ -36,14 +36,20 @@ function add(scheme) {
     })
 }
 
-// can update but unable to resolve to the newly inserted scheme, including id
 function update(changes, id) {
   return db('schemes as sch')
     .where('sch.id', id)
     .update(changes)
+    .then(result => {
+      if (result === 1){
+        return findById(id)
+      }
+    })
+    .catch(error => {
+      return error
+    })
 }
 
-// can delete but unable to resolve to the newly inserted scheme, including id
 function remove(id) {
   return db('schemes as sch')
     .where('sch.id', id)
