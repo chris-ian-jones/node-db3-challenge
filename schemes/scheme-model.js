@@ -27,11 +27,13 @@ function findSteps(id) {
     .orderBy('st.step_number')
 }
 
-// can add but unable to resolve to the newly inserted scheme, including id
 function add(scheme) {
   return db('schemes as sch')
-    .returning(['sch.id','sch.scheme_name'])
+    // .returning(['sch.id','sch.scheme_name'])
     .insert(scheme)
+    .then(newSchemeIdArr => {
+      return findById(newSchemeIdArr[0])
+    })
 }
 
 // can update but unable to resolve to the newly inserted scheme, including id
